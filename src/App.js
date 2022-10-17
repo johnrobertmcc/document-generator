@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useRef } from 'react';
+import Input from './Input';
+import Output from './Output/Output';
+import { DEFAULT_OBJECT } from './utils';
 
+/**
+ * A React.Component used to help developers document their fucking code.
+ *
+ * @returns {Element}  Returns the element as app,defaulted as layout.
+ */
 function App() {
+  const [object, setObject] = useState(DEFAULT_OBJECT);
+  const propRef = useRef(null);
+  const docRef = useRef(null);
+  const refMap = {
+    prop: propRef,
+    js: docRef,
+  };
+
+  /**
+   * Function used to copy a certain ref's text to the clipboard.
+   */
+  function clickRef(ref) {
+    navigator.clipboard.writeText(refMap[ref].current.value);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <nav>test</nav> */}
+      <main>
+        <Input setObject={setObject} clickRef={clickRef} />
+        <Output object={object} propRef={propRef} docRef={docRef} />
+      </main>
+    </>
   );
 }
 

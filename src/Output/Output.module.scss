@@ -1,0 +1,8 @@
+.outputWrap {
+  @apply grid grid-cols-2 h-full w-screen relative;
+  height: 50vh;
+
+  & textarea {
+    @apply bg-gray-100 w-full font-mono text-sm;
+  }
+}
