@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import styles from './Input.module.scss';
 import JSON5 from 'json5';
+import { AVAILABLE_INPUTS, HEADER, INSTRUCTIONS } from './Input.utils';
 
 /**
  * Allows the user to input their object as plain text and set it to the state.
@@ -9,11 +10,12 @@ import JSON5 from 'json5';
  * @author  John Robert McCann
  * @since   10/14/2022
  * @version 1.0.0
- * @param   {object}  props           The component destructured as props.
- * @param   {string}  props.component The name of the component.
- * @return  {Element}                 The Input component.
+ * @param   {object}   props           The component destructured as props.
+ * @param   {Function} props.setObject Function usd to set the object with appropriate params.
+ * @param   {object}   props.object    The parameters of the input.
+ * @return  {Element}                  The Input component.
  */
-export default function Input({ setObject, clickRef }) {
+export default function Input({ setObject, object }) {
   const [value, setValue] = useState('');
   const inputRef = useRef();
 
@@ -35,6 +37,17 @@ export default function Input({ setObject, clickRef }) {
     setObject((prev) => ({ ...prev, parsed: JSON5.parse(value) }));
   }
 
+  /**
+   * Function used to handle the changes of the optional inputs.
+   *
+   * @param {Event} e The event details.
+   */
+  function handleChange(e) {
+    e.preventDefault();
+
+    setObject((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
   return (
     <section className={styles.inputWrap}>
       <textarea
@@ -46,15 +59,19 @@ export default function Input({ setObject, clickRef }) {
         autoFocus
         onKeyPress={(e) => accessibleKey(e)}
       />
-      <div>
-        <input
-          type="text"
-          // value={}
-          placeholder="Author"
-        />
-        <button onClick={() => clickRef('prop')}>Copy propTypes</button>
-        <button onClick={() => clickRef('js')}>Copy jsDoc </button>
-        <button onClick={handleSubmit}>Submit</button>
+      <div className={styles.information}>
+        <h2>{HEADER}</h2>
+        <p>{INSTRUCTIONS}</p>
+        <ul className={styles.optional}>
+          {AVAILABLE_INPUTS.map((input, i) => (
+            <li>
+              <input {...input} key={i} onChange={(e) => handleChange(e)} />
+            </li>
+          ))}
+          <button onClick={handleSubmit} className={styles.submit}>
+            Submit
+          </button>
+        </ul>
       </div>
     </section>
   );

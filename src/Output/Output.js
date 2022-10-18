@@ -15,11 +15,11 @@ import {
  * @version 1.0.0
  * @param   {object}   props           The component destructured as props.
  * @param   {string}   props.object    The object stringified to parse into JSDocs and PropDocs.
- * @param   {Element}  props.docRef    The ref to attach to the JSDoc textarea.
- * @param   {Element}  props.propRef   The ref to attach to the propType textarea.
+ * @param   {object}   props.refMap    An map containing appropriate refs.
+ * @param   {Function} props.clickRef  Functioned used to copy contents of the ref to the clipboard.
  * @return  {Element}                  The Output component.
  */
-export default function Output({ object, docRef, propRef }) {
+export default function Output({ object, refMap, clickRef }) {
   const { author = null, parsed = null, version = null, date = null } = object;
   const [parsedValue, setParsedValue] = useState(DEFAULT_PARSED_VALUE);
 
@@ -34,26 +34,26 @@ export default function Output({ object, docRef, propRef }) {
 
   return (
     <section className={styles.outputWrap}>
-      <textarea
-        placeholder="PropTypes"
-        value={parsedValue?.propType}
-        className={styles.propTypes}
-        onChange={(e) =>
-          setParsedValue((prev) => ({ ...prev, propType: e.target.value }))
-        }
-        ref={propRef}
-        id="propType"
-      />
-      <textarea
-        placeholder="JSDocs"
-        value={parsedValue?.jsDoc}
-        className={styles.jsDoc}
-        onChange={(e) =>
-          setParsedValue((prev) => ({ ...prev, jsDoc: e.target.value }))
-        }
-        ref={docRef}
-        id="jsDoc"
-      />
+      {Object.keys(refMap).map((ref, i) => {
+        return (
+          <div className={styles.textWrapper}>
+            <textarea
+              key={i}
+              value={parsedValue[ref]}
+              className={styles[ref]}
+              onChange={(e) =>
+                setParsedValue((prev) => ({ ...prev, [ref]: e.target.value }))
+              }
+              ref={refMap[ref]}
+              id={ref}
+              placeholder={ref}
+            />
+            {parsedValue[ref] && (
+              <button onClick={() => clickRef(ref)}>Copy</button>
+            )}
+          </div>
+        );
+      })}
     </section>
   );
 }

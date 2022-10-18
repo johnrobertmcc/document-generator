@@ -1,5 +1,7 @@
-// PROPTYPES //
+export const PROPTYPES = 'prop';
+export const JSDOC = 'js';
 
+// PROPTYPES //
 export const PROP_MAP = {
   object: 'PropTypes.object,',
   array: 'PropTypes.array,',
@@ -7,6 +9,7 @@ export const PROP_MAP = {
   boolean: 'PropTypes.bool,',
   string: 'PropTypes.string,',
   shape: 'PropTypes.shape({',
+  null: 'PropTypes.oneOf([null]),',
 };
 
 export const DEFAULT_PARSED_VALUE = { propType: '', jsDoc: '' };
@@ -55,12 +58,14 @@ export function createPropTypes(
   const fin = opening;
 
   Object.keys(props).forEach((prop) => {
-    let x = typeof props[prop];
+    let x = typeof props?.[prop];
     let nested = null;
 
     if (x === 'object') {
       if (Array.isArray(props[prop])) {
         x = 'array';
+      } else if (!props[prop]) {
+        x = 'null';
       } else if (Object.values(props?.[prop]).length) {
         x = 'shape';
         const newLevel = level + 2;

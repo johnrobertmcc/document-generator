@@ -1,8 +1,30 @@
 .inputWrap {
-  @apply grid grid-cols-2 h-full w-screen;
+  @apply grid grid-cols-2 h-full w-full;
   height: 50vh;
 
   & textarea {
     @apply bg-gray-500/20 w-full font-mono text-sm;
+  }
+
+  & .information {
+    @apply mx-2;
+    & > h2 {
+      @apply text-right text-lg font-bold opacity-60 uppercase;
+    }
+
+    & > p {
+      @apply text-center text-gray-600/90 px-5;
+    }
+    @apply grid grid-rows-2;
+    & .optional {
+      & input {
+        @apply border w-full py-2 px-1;
+      }
+      & .submit {
+        @apply border border-black;
+      }
+
+      @apply flex flex-col;
+    }
   }
 }

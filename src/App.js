@@ -13,8 +13,8 @@ function App() {
   const propRef = useRef(null);
   const docRef = useRef(null);
   const refMap = {
-    prop: propRef,
-    js: docRef,
+    propType: propRef,
+    jsDoc: docRef,
   };
 
   /**
@@ -28,8 +28,8 @@ function App() {
     <>
       {/* <nav>test</nav> */}
       <main>
-        <Input setObject={setObject} clickRef={clickRef} />
-        <Output object={object} propRef={propRef} docRef={docRef} />
+        <Input setObject={setObject} object={object} />
+        <Output object={object} refMap={refMap} clickRef={clickRef} />
       </main>
     </>
   );
