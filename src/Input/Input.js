@@ -1,8 +1,16 @@
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import styles from './Input.module.scss';
 import JSON5 from 'json5';
-import { AVAILABLE_INPUTS, HEADER, INSTRUCTIONS } from './Input.utils';
+import {
+  AVAILABLE_INPUTS,
+  HEADER,
+  INSTRUCTIONS_FULL,
+  INSTRUCTIONS_HALF,
+  SUBMIT_BTN,
+  DEFAULT_VALUE,
+} from './Input.utils';
+import { accessibleKey, LINKED_IN } from '../utils';
 
 /**
  * Allows the user to input their object as plain text and set it to the state.
@@ -11,35 +19,30 @@ import { AVAILABLE_INPUTS, HEADER, INSTRUCTIONS } from './Input.utils';
  * @since   10/14/2022
  * @version 1.0.0
  * @param   {object}   props           The component destructured as props.
- * @param   {Function} props.setObject Function usd to set the object with appropriate params.
- * @param   {object}   props.object    The parameters of the input.
+ * @param   {Function} props.setObject Function useSd to set the object with appropriate params.
  * @return  {Element}                  The Input component.
  */
-export default function Input({ setObject, object }) {
-  const [value, setValue] = useState('');
-  const inputRef = useRef();
+export default function Input({ setObject }) {
+  const [value, setValue] = useState(DEFAULT_VALUE);
 
-  /**
-   * Function used to watch for Enter key to submit form.
-   *
-   * @param {Event} e  The HTML event of the user.
-   */
-  function accessibleKey(e) {
-    if (value && e.key === 'Enter') {
-      handleSubmit();
-    }
-  }
+  debugger;
 
   /**
    * Function used to set the object to state's value and parse it using JSON5 library.
+   *
+   * @author  John Robert McCann
+   * @since   10/17/2022
    */
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     setObject((prev) => ({ ...prev, parsed: JSON5.parse(value) }));
   }
 
   /**
    * Function used to handle the changes of the optional inputs.
    *
+   * @author  John Robert McCann
+   * @since   10/17/2022
    * @param {Event} e The event details.
    */
   function handleChange(e) {
@@ -51,17 +54,19 @@ export default function Input({ setObject, object }) {
   return (
     <section className={styles.inputWrap}>
       <textarea
-        ref={inputRef}
         id="textArea"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Paste props here"
         autoFocus
-        onKeyPress={(e) => accessibleKey(e)}
+        onKeyPress={(e) => accessibleKey(e, value && handleSubmit(e))}
       />
       <div className={styles.information}>
-        <h2>{HEADER}</h2>
-        <p>{INSTRUCTIONS}</p>
+        <a target="_blank" rel="noreferrer" href={LINKED_IN}>
+          {HEADER}
+        </a>
+        <p className={styles.fullScreen}>{INSTRUCTIONS_FULL}</p>
+        <p className={styles.halfScreen}>{INSTRUCTIONS_HALF}</p>
         <ul className={styles.optional}>
           {AVAILABLE_INPUTS.map((input, i) => (
             <li>
@@ -69,7 +74,7 @@ export default function Input({ setObject, object }) {
             </li>
           ))}
           <button onClick={handleSubmit} className={styles.submit}>
-            Submit
+            {SUBMIT_BTN}
           </button>
         </ul>
       </div>
@@ -78,5 +83,5 @@ export default function Input({ setObject, object }) {
 }
 
 Input.propTypes = {
-  onSubmit: PropTypes.func,
+  setObject: PropTypes.func,
 };

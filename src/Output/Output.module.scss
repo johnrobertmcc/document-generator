@@ -1,16 +1,27 @@
 .outputWrap {
-  @apply grid grid-cols-2 h-full w-full relative;
-  height: 50vh;
+  @apply grid md:grid-cols-2 h-full w-full relative;
+  min-height: 50vh;
 
   & .textWrapper {
     @apply w-full font-mono text-sm relative h-full;
+    @apply col-span-2 md:col-span-1;
 
     & textarea {
-      @apply w-full h-full bg-gray-100 py-2 px-4;
+      @apply w-full h-full bg-gray-200 py-2 px-4;
+      min-height: 50vh;
+
+      &:first-child {
+        @apply border-r border-black/10;
+      }
     }
 
     & > button {
       @apply absolute top-2 right-5 border border-black py-2 px-4;
+
+      &:hover,
+      &:focus {
+        @apply bg-blue-900/90 text-white;
+      }
     }
   }
 }

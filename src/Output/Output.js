@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Output.module.scss';
 import {
   createJSDocs,
   createPropTypes,
+  COPY,
   DEFAULT_PARSED_VALUE,
 } from './Output.utils';
 
@@ -16,21 +17,23 @@ import {
  * @param   {object}   props           The component destructured as props.
  * @param   {string}   props.object    The object stringified to parse into JSDocs and PropDocs.
  * @param   {object}   props.refMap    An map containing appropriate refs.
- * @param   {Function} props.clickRef  Functioned used to copy contents of the ref to the clipboard.
+ * @param   {Function} props.clickRef  Function used to copy contents of the ref to the clipboard.
  * @return  {Element}                  The Output component.
  */
 export default function Output({ object, refMap, clickRef }) {
   const { author = null, parsed = null, version = null, date = null } = object;
   const [parsedValue, setParsedValue] = useState(DEFAULT_PARSED_VALUE);
 
+  console.log('jr', { object });
   useEffect(() => {
     if (parsed) {
+      debugger;
       setParsedValue({
         propType: createPropTypes(parsed),
         jsDoc: createJSDocs(parsed, author, date, version),
       });
     }
-  }, [parsed]);
+  }, [parsed, author, date, version]);
 
   return (
     <section className={styles.outputWrap}>
@@ -49,7 +52,7 @@ export default function Output({ object, refMap, clickRef }) {
               placeholder={`${ref} will populate here`}
             />
             {parsedValue[ref] && (
-              <button onClick={() => clickRef(ref)}>Copy</button>
+              <button onClick={() => clickRef(ref)}>{COPY}</button>
             )}
           </div>
         );
@@ -59,4 +62,9 @@ export default function Output({ object, refMap, clickRef }) {
 }
 Output.propTypes = {
   object: PropTypes.object,
+  refMap: PropTypes.shape({
+    propType: PropTypes.element,
+    jsDoc: PropTypes.element,
+  }),
+  clickRef: PropTypes.func,
 };

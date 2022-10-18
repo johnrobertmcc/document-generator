@@ -1,5 +1,6 @@
 export const PROPTYPES = 'prop';
 export const JSDOC = 'js';
+export const COPY = 'copy';
 
 // PROPTYPES //
 export const PROP_MAP = {
@@ -33,7 +34,8 @@ export const JSDOC_CLOSURE = [
 
 /**
  * Function used to return a dynamic array of blank spaces.
- *
+ * @author  John Robert McCann
+ * @since   10/17/2022
  * @param   {number} whitespace The whitespace to add based on length of element.
  * @returns {Array}             The number of whitespace to add.
  */
@@ -44,10 +46,12 @@ function generateWhiteSpace(whitespace) {
 /**
  * Function used to create an object of proptype delcarations.
  *
- * @param {object}   props   The props as an object.
- * @param {Function} opening The opening line, defaulted to new propTypes.
- * @param {Function} closure The closing brackets, defaulted to JSON closure.
- * @param {number}   level   The amount of whitespace to add to signify nested levels.
+ * @author John Robert McCann
+ * @since  10/17/2022
+ * @param  {object}   props   The props as an object.
+ * @param  {Function} opening The opening line, defaulted to new propTypes.
+ * @param  {Function} closure The closing brackets, defaulted to JSON closure.
+ * @param  {number}   level   The amount of whitespace to add to signify nested levels.
  */
 export function createPropTypes(
   props,
@@ -91,6 +95,8 @@ export function createPropTypes(
 /**
  * Function used to decode how much white space to add.
  *
+ * @author  John Robert McCann
+ * @since   10/17/2022
  * @param   {object} props The arguments as an object.
  * @returns {number}       Returns the longest length of the prop declarations.
  */
@@ -121,6 +127,8 @@ export const JSDOC_MAP = {
 /**
  * Function used to create a string of jsDocs.
  *
+ * @author John Robert McCann
+ * @since 10/17/2022
  * @param {object}  props    The parsed arguments as an object.
  * @param {string}  author   The author information passed.
  * @param {string}  date     The date passed, defaulted to today.
@@ -154,9 +162,12 @@ export function createJSDocs(props, author, date, version) {
 /**
  * Function used to generate a single JSDoc line with appropriate spacing.
  *
+ * @author  John Robert McCann
+ * @since   10/17/2022
  * @param   {string} param       The type returned.
  * @param   {string} argument    The argument titled.
- * @param   {number} whitespace  The amount of whitespace to fill between param and arg.
+ * @param    *
+{number} whitespace  The amount of whitespace to fill between param and arg.
  * @param   {string} description The description of the docline, i.e.: param, author, since.
  * @returns {string}             Returns a line of JSDocs.
  */
@@ -180,6 +191,8 @@ function generateJSDocLine(
  *   ...etc.
  * All available examples descriped in JSDOC_MAP.
  *
+ * @author  John Robert McCann
+ * @since   10/17/2022
  * @param   {string} description The descriptor documentation.
  * @param   {number} whitespace  The amount of whitespace to apply.
  * @param   {string} param       The dynmaic param to apply.

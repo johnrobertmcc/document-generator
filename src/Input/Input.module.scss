@@ -1,28 +1,54 @@
 .inputWrap {
-  @apply grid grid-cols-2 h-full w-full;
-  height: 50vh;
+  @apply grid-cols-1 overflow-y-auto;
+  @apply grid md:grid-cols-2 min-h-full w-full;
+  @apply gap-2;
+
+  min-height: 50vh;
 
   & textarea {
     @apply py-2 px-4;
-    @apply bg-gray-500/20 w-full font-mono text-sm;
+    @apply bg-gray-400/20 w-full font-mono text-sm;
+    @apply col-span-2 md:col-span-1;
+    min-height: 50vh;
   }
 
   & .information {
+    @apply row-start-1 md:col-start-2;
     @apply m-2;
-    & > h2 {
-      @apply text-right text-lg font-bold opacity-60 uppercase;
+    & > a {
+      @apply text-right text-lg font-bold uppercase;
+      @apply h-16 mb-5;
+
+      &:hover,
+      &:focus {
+        @apply bg-blue-900/90 text-white;
+      }
     }
 
     & > p {
-      @apply text-center text-gray-600/90 px-5 text-xs;
+      @apply text-center text-gray-900 px-5 text-xs;
+
+      &.fullScreen {
+        @apply hidden md:block;
+      }
+      &.halfScreen {
+        @apply md:hidden;
+      }
     }
     @apply grid grid-rows-2;
     & .optional {
+      @apply overflow-y-auto;
       & input {
         @apply border w-full py-2 px-1;
+        @apply bg-gray-200 border border-black/30;
       }
       & .submit {
-        @apply border border-black;
+        @apply border border-black/30 bg-gray-200;
+        @apply py-2;
+        &:hover,
+        &:focus {
+          @apply bg-blue-900/90 text-white;
+        }
       }
 
       @apply flex flex-col;
