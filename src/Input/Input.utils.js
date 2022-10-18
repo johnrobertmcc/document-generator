@@ -1,6 +1,6 @@
 export const AVAILABLE_INPUTS = [
   { name: 'author', type: 'text', placeholder: 'Optional @author param' },
-  { name: 'date', type: 'date', placeholder: 'Optional @since param' },
+  { name: 'date', type: 'date', defaultValue: new Date().toLocaleDateString() },
   { name: 'version', type: 'text', placeholder: 'Optional @version param' },
 ];
 

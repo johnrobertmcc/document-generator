@@ -46,7 +46,7 @@ export default function Output({ object, refMap, clickRef }) {
               }
               ref={refMap[ref]}
               id={ref}
-              placeholder={ref}
+              placeholder={`${ref} will populate here`}
             />
             {parsedValue[ref] && (
               <button onClick={() => clickRef(ref)}>Copy</button>
