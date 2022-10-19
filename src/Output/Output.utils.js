@@ -56,8 +56,6 @@ export function createPropTypes(
   closure = PROPDOC_CLOSURE,
   level = 2
 ) {
-  document.getElementById('propType').value = '';
-
   const fin = opening;
 
   Object.keys(props).forEach((prop) => {

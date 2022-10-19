@@ -20,6 +20,17 @@ function App() {
     jsDoc: docRef,
   };
 
+  useEffect(() => {
+    const { parsed = null } = object;
+
+    if (parsed) {
+      // debugger;
+      refMap.propType.current.textContent = '';
+    }
+  }, [object]);
+
+  // console.log('jr textContent', refMap.propType.current.textContent);
+
   /**
    * Function used to copy a certain ref's text to the clipboard.
    * @author  John Robert McCann

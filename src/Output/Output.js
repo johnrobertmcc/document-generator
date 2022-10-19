@@ -22,10 +22,15 @@ import CopyIcon from '../CopyIcon/CopyIcon';
  * @return  {Element}                  The Output component.
  */
 export default function Output({ object, refMap, clickRef }) {
-  const { author = null, parsed = null, version = null, date = null } = object;
   const [parsedValue, setParsedValue] = useState(DEFAULT_PARSED_VALUE);
 
   useEffect(() => {
+    const {
+      author = null,
+      parsed = null,
+      version = null,
+      date = null,
+    } = object;
     if (parsed) {
       setParsedValue((prev) => {
         return {
@@ -34,7 +39,7 @@ export default function Output({ object, refMap, clickRef }) {
         };
       });
     }
-  }, [parsed, author, date, version]);
+  }, [object]);
 
   return (
     <section className={styles.outputWrap}>
@@ -66,11 +71,3 @@ export default function Output({ object, refMap, clickRef }) {
     </section>
   );
 }
-Output.propTypes = {
-  object: PropTypes.object,
-  refMap: PropTypes.shape({
-    propType: PropTypes.object,
-    jsDoc: PropTypes.object,
-  }),
-  clickRef: PropTypes.func,
-};

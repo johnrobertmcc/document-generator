@@ -41,9 +41,9 @@ export default function Input({ setObject }) {
     let parsed = null;
     try {
       parsed = JSON5.parse(value);
+      setObject({ parsed: '' });
       setError(false);
     } catch (e) {
-      setValue('');
       setError(true);
       console.error(e, ERROR);
     }
@@ -65,6 +65,18 @@ export default function Input({ setObject }) {
     setObject((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
+  /**
+   * Function used to clear the adjoining textareas.
+   */
+  function clearText() {
+    document.getElementById('propType').value = '';
+    document.getElementById('jsDoc').value = '';
+    document.getElementById('propType').textContent = '';
+    document.getElementById('jsDoc').textContent = '';
+    document.getElementById('propType').innerContent = '';
+    document.getElementById('jsDoc').innerContent = '';
+    setObject({ parsed: '' });
+  }
   return (
     <section className={styles.inputWrap}>
       <textarea
@@ -93,6 +105,9 @@ export default function Input({ setObject }) {
               <input {...input} key={i} onChange={(e) => handleChange(e)} />
             </li>
           ))}
+          <li>
+            <button onClick={() => clearText()}>Clear</button>
+          </li>
         </ul>
       </div>
     </section>
