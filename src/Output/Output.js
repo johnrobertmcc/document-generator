@@ -7,6 +7,7 @@ import {
   COPY,
   DEFAULT_PARSED_VALUE,
 } from './Output.utils';
+import CopyIcon from '../CopyIcon/CopyIcon';
 
 /**
  * Renders the Output from the given props.
@@ -26,22 +27,21 @@ export default function Output({ object, refMap, clickRef }) {
 
   useEffect(() => {
     if (parsed) {
-      setParsedValue({
-        propType: createPropTypes(parsed),
-        jsDoc: createJSDocs(parsed, author, date, version),
+      setParsedValue((prev) => {
+        return {
+          propType: createPropTypes(parsed),
+          jsDoc: createJSDocs(parsed, author, date, version),
+        };
       });
     }
   }, [parsed, author, date, version]);
-
-  console.log('jr parsdValue', parsedValue);
 
   return (
     <section className={styles.outputWrap}>
       {Object.keys(refMap).map((ref, i) => {
         return (
-          <div className={styles.textWrapper}>
+          <div className={styles.textWrapper} key={i}>
             <textarea
-              key={i}
               value={parsedValue[ref]}
               className={styles[ref]}
               onChange={(e) =>
@@ -52,7 +52,13 @@ export default function Output({ object, refMap, clickRef }) {
               placeholder={`${ref} will populate here`}
             />
             {parsedValue[ref] && (
-              <button onClick={() => clickRef(ref)}>{COPY}</button>
+              <button
+                className={styles.copyBtn}
+                onClick={() => clickRef(ref)}
+                aria-label={COPY}
+              >
+                {<CopyIcon />}
+              </button>
             )}
           </div>
         );
@@ -63,8 +69,8 @@ export default function Output({ object, refMap, clickRef }) {
 Output.propTypes = {
   object: PropTypes.object,
   refMap: PropTypes.shape({
-    propType: PropTypes.element,
-    jsDoc: PropTypes.element,
+    propType: PropTypes.object,
+    jsDoc: PropTypes.object,
   }),
   clickRef: PropTypes.func,
 };

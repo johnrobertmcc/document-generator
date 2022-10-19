@@ -1,3 +1,5 @@
+export const ERROR = 'Unable to parse';
+
 export const AVAILABLE_INPUTS = [
   { name: 'author', type: 'text', placeholder: 'Optional @author param' },
   { name: 'date', type: 'date', defaultValue: new Date().toLocaleDateString() },

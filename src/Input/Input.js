@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import styles from './Input.module.scss';
 import JSON5 from 'json5';
+import cn from 'classnames';
 import {
   AVAILABLE_INPUTS,
   HEADER,
@@ -9,6 +10,7 @@ import {
   INSTRUCTIONS_HALF,
   SUBMIT_BTN,
   DEFAULT_VALUE,
+  ERROR,
 } from './Input.utils';
 import { accessibleKey, LINKED_IN } from '../utils';
 
@@ -24,16 +26,30 @@ import { accessibleKey, LINKED_IN } from '../utils';
  */
 export default function Input({ setObject }) {
   const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
 
   /**
    * Function used to set the object to state's value and parse it using JSON5 library.
    *
    * @author  John Robert McCann
    * @since   10/17/2022
+   * @param {Event} e The HTML event.
    */
   function handleSubmit(e) {
     e.preventDefault();
-    setObject((prev) => ({ ...prev, parsed: JSON5.parse(value) }));
+
+    let parsed = null;
+    try {
+      parsed = JSON5.parse(value);
+      setError(false);
+    } catch (e) {
+      setValue('');
+      setError(true);
+      console.error(e, ERROR);
+    }
+    if (parsed) {
+      setObject((prev) => ({ ...prev, parsed }));
+    }
   }
 
   /**
@@ -52,6 +68,7 @@ export default function Input({ setObject }) {
   return (
     <section className={styles.inputWrap}>
       <textarea
+        className={cn(error && styles.error)}
         id="textArea"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -72,7 +89,7 @@ export default function Input({ setObject }) {
         <p className={styles.halfScreen}>{INSTRUCTIONS_HALF}</p>
         <ul className={styles.optional}>
           {AVAILABLE_INPUTS.map((input, i) => (
-            <li>
+            <li key={i}>
               <input {...input} key={i} onChange={(e) => handleChange(e)} />
             </li>
           ))}
