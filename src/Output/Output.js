@@ -24,16 +24,16 @@ export default function Output({ object, refMap, clickRef }) {
   const { author = null, parsed = null, version = null, date = null } = object;
   const [parsedValue, setParsedValue] = useState(DEFAULT_PARSED_VALUE);
 
-  console.log('jr', { object });
   useEffect(() => {
     if (parsed) {
-      debugger;
       setParsedValue({
         propType: createPropTypes(parsed),
         jsDoc: createJSDocs(parsed, author, date, version),
       });
     }
   }, [parsed, author, date, version]);
+
+  console.log('jr parsdValue', parsedValue);
 
   return (
     <section className={styles.outputWrap}>

@@ -9,7 +9,7 @@ export const HEADER = 'Generate by J.R.';
 export const SUBMIT_BTN = 'Submit';
 
 export const DEFAULT_VALUE =
-  '{\n  test: true,\n  "quoted": "quotedstring",\n  testObj: {\n    nested: true\n  },\n}';
+  'Paste props here, i.e.: \n{\n  test: true,\n  "quoted": "quotedstring",\n  testObj: {\n    nested: true\n  },\n}';
 
 export const INSTRUCTIONS_FULL =
   'Paste your props into the field on the left and click submit or press the Enter key to generate basic PropTypes and JSDocs';

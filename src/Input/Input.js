@@ -23,9 +23,7 @@ import { accessibleKey, LINKED_IN } from '../utils';
  * @return  {Element}                  The Input component.
  */
 export default function Input({ setObject }) {
-  const [value, setValue] = useState(DEFAULT_VALUE);
-
-  debugger;
+  const [value, setValue] = useState('');
 
   /**
    * Function used to set the object to state's value and parse it using JSON5 library.
@@ -57,14 +55,19 @@ export default function Input({ setObject }) {
         id="textArea"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Paste props here"
+        placeholder={DEFAULT_VALUE}
         autoFocus
-        onKeyPress={(e) => accessibleKey(e, value && handleSubmit(e))}
+        onKeyPress={(e) => accessibleKey(e, () => handleSubmit(e), 'Enter')}
       />
       <div className={styles.information}>
-        <a target="_blank" rel="noreferrer" href={LINKED_IN}>
-          {HEADER}
-        </a>
+        <span>
+          <button onClick={(e) => handleSubmit(e)} className={styles.submit}>
+            {SUBMIT_BTN}
+          </button>
+          <a target="_blank" rel="noreferrer" href={LINKED_IN}>
+            {HEADER}
+          </a>
+        </span>
         <p className={styles.fullScreen}>{INSTRUCTIONS_FULL}</p>
         <p className={styles.halfScreen}>{INSTRUCTIONS_HALF}</p>
         <ul className={styles.optional}>
@@ -73,9 +76,6 @@ export default function Input({ setObject }) {
               <input {...input} key={i} onChange={(e) => handleChange(e)} />
             </li>
           ))}
-          <button onClick={handleSubmit} className={styles.submit}>
-            {SUBMIT_BTN}
-          </button>
         </ul>
       </div>
     </section>

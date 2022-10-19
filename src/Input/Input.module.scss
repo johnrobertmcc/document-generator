@@ -6,22 +6,39 @@
   min-height: 50vh;
 
   & textarea {
-    @apply py-2 px-4;
+    @apply py-2 px-4 text-black;
     @apply bg-gray-400/20 w-full font-mono text-sm;
     @apply col-span-2 md:col-span-1;
     min-height: 50vh;
+
+    &::placeholder {
+      @apply text-black/60;
+    }
   }
 
   & .information {
     @apply row-start-1 md:col-start-2;
     @apply m-2;
-    & > a {
-      @apply text-right text-lg font-bold uppercase;
-      @apply h-16 mb-5;
 
-      &:hover,
-      &:focus {
-        @apply bg-blue-900/90 text-white;
+    & > span {
+      @apply w-full flex justify-between mb-5;
+      & .submit {
+        @apply bg-gray-200 uppercase font-bold;
+        @apply py-2 px-4 h-16 w-36;
+        &:hover,
+        &:focus {
+          @apply bg-blue-900/90 text-white;
+        }
+      }
+
+      & > a {
+        @apply text-center text-lg font-bold uppercase;
+        @apply h-16 px-4 py-2 flex items-center justify-center;
+
+        &:hover,
+        &:focus {
+          @apply bg-blue-900/90 text-white;
+        }
       }
     }
 
@@ -41,14 +58,6 @@
       & input {
         @apply border w-full py-2 px-1;
         @apply bg-gray-200 border border-black/30;
-      }
-      & .submit {
-        @apply border border-black/30 bg-gray-200;
-        @apply py-2;
-        &:hover,
-        &:focus {
-          @apply bg-blue-900/90 text-white;
-        }
       }
 
       @apply flex flex-col;

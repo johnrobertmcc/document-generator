@@ -19,9 +19,6 @@ export const PROPDOC_OPENING = ['Function.propTypes = {'];
 
 export const PROPDOC_CLOSURE = ['};'];
 
-export const CREATE_NESTED_OPENING = (level = 2) =>
-  `${generateWhiteSpace(level)}`;
-
 export const CREATE_NESTED_CLOSURE = (level = 2) =>
   `${generateWhiteSpace(level - 2)}}),`;
 
@@ -59,6 +56,8 @@ export function createPropTypes(
   closure = PROPDOC_CLOSURE,
   level = 2
 ) {
+  document.getElementById('propType').value = '';
+
   const fin = opening;
 
   Object.keys(props).forEach((prop) => {
@@ -75,7 +74,7 @@ export function createPropTypes(
         const newLevel = level + 2;
         nested = createPropTypes(
           props[prop],
-          [CREATE_NESTED_OPENING(newLevel)],
+          [],
           [CREATE_NESTED_CLOSURE(newLevel)],
           level + 2
         );
@@ -135,6 +134,8 @@ export const JSDOC_MAP = {
  * @param {string}  version  The version of the React app.
  */
 export function createJSDocs(props, author, date, version) {
+  document.getElementById('jsDoc').value = '';
+
   const fin = JSDOC_OPENING;
 
   if (author) {
@@ -166,8 +167,7 @@ export function createJSDocs(props, author, date, version) {
  * @since   10/17/2022
  * @param   {string} param       The type returned.
  * @param   {string} argument    The argument titled.
- * @param    *
-{number} whitespace  The amount of whitespace to fill between param and arg.
+ * @param   {number} whitespace  The amount of whitespace to fill between param and arg.
  * @param   {string} description The description of the docline, i.e.: param, author, since.
  * @returns {string}             Returns a line of JSDocs.
  */

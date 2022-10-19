@@ -1,11 +1,12 @@
 export const DEFAULT_OBJECT = {
   parsed: null,
   author: '',
-  date: new Date().toLocaleDateString(),
+  date: '',
   version: '',
 };
 
 export const LINKED_IN = 'https://www.linkedin.com/in/jrmcc/';
+
 /**
  * Function used to watch for Enter key to submit form.
  * @author John Robert McCann
@@ -15,6 +16,7 @@ export const LINKED_IN = 'https://www.linkedin.com/in/jrmcc/';
  * @param  {string}    key      The key designation.
  */
 export function accessibleKey(e, callBack, key = 'Enter') {
+  debugger;
   if (e.key === key) {
     callBack();
   }
