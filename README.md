@@ -1,6 +1,6 @@
 # AutoPopulate by J.R
 
----
+## ![Simple Use](https://github.com/johnrobertmcc/document-generator/blob/main/public/media/autopopulate.gif)
 
 ### Purpose
 
