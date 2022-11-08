@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
  * @author  John Robert McCann
  * @since   10/18/2022
  * @version 1.0.0
+ * @param   {string}  fill The fill color of the svg.
  * @return  {Element}      The CopyIcon component.
  */
 export default function CopyIcon({ fill }) {

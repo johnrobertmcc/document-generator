@@ -79,3 +79,17 @@ export default function Output({ object, refMap, clickRef }) {
     </section>
   );
 }
+
+Function.propTypes = {
+  object: PropTypes.shape({
+    parsed: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
+    author: PropTypes.string,
+    date: PropTypes.string,
+    version: PropTypes.string,
+  }),
+  refMap: PropTypes.shape({
+    propType: PropTypes.object,
+    jsDoc: PropTypes.object,
+  }),
+  clickRef: PropTypes.func,
+};

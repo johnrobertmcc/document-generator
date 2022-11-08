@@ -22,8 +22,10 @@ function App() {
 
   /**
    * Function used to copy a certain ref's text to the clipboard.
-   * @author  John Robert McCann
-   * @since   10/17/2022
+   *
+   * @author John Robert McCann
+   * @since  10/17/2022
+   * @param  {string} ref  The ref name, as the key of above refMap.
    */
   function clickRef(ref) {
     navigator.clipboard.writeText(refMap[ref].current.value);

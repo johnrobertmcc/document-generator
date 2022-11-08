@@ -22,10 +22,10 @@ import { accessibleKey, LINKED_IN, DEFAULT_OBJECT } from '../utils';
  * @since   10/14/2022
  * @version 1.0.0
  * @param   {object}   props           The component destructured as props.
- * @param   {Function} props.setObject Function useSd to set the object with appropriate params.
+ * @param   {Function} props.setObject Function used to set the object with appropriate params.
  * @return  {Element}                  The Input component.
  */
-export default function Input({ setObject, object }) {
+export default function Input({ setObject }) {
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const [optValues, setOptValues] = useState(DEFAULT_OPT_VALUES);
