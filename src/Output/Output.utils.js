@@ -15,9 +15,9 @@ export const PROP_MAP = {
 
 export const DEFAULT_PARSED_VALUE = { propType: '', jsDoc: '' };
 
-export const PROPDOC_OPENING = ['Function.propTypes = {'];
+export const PROPDOC_OPENING = 'Function.propTypes = {';
 
-export const PROPDOC_CLOSURE = ['};'];
+export const PROPDOC_CLOSURE = '};';
 
 export const CREATE_NESTED_CLOSURE = (level = 2) =>
   `${generateWhiteSpace(level - 2)}}),`;
@@ -56,7 +56,7 @@ export function createPropTypes(
   closure = PROPDOC_CLOSURE,
   level = 2
 ) {
-  const fin = opening;
+  let fin = [opening];
 
   Object.keys(props).forEach((prop) => {
     let x = typeof props?.[prop];
@@ -74,7 +74,7 @@ export function createPropTypes(
           props[prop],
           [],
           [CREATE_NESTED_CLOSURE(newLevel)],
-          level + 2
+          newLevel
         );
       }
     }
@@ -85,7 +85,7 @@ export function createPropTypes(
     }
   });
 
-  fin.push(...closure);
+  fin.push(closure);
   return fin.join('\n');
 }
 
@@ -134,7 +134,7 @@ export const JSDOC_MAP = {
 export function createJSDocs(props, author, date, version) {
   document.getElementById('jsDoc').value = '';
 
-  const fin = JSDOC_OPENING;
+  const fin = [...JSDOC_OPENING];
 
   if (author) {
     fin.push(generateOptionalJSDocLine('author', 2, author));

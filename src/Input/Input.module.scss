@@ -65,6 +65,10 @@
       }
 
       @apply flex flex-col;
+
+      & .clearBtn {
+        @apply border px-4 py-2 mt-5 bg-white font-medium;
+      }
     }
   }
 }

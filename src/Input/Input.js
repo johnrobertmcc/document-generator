@@ -11,8 +11,9 @@ import {
   SUBMIT_BTN,
   DEFAULT_VALUE,
   ERROR,
+  DEFAULT_OPT_VALUES,
 } from './Input.utils';
-import { accessibleKey, LINKED_IN } from '../utils';
+import { accessibleKey, LINKED_IN, DEFAULT_OBJECT } from '../utils';
 
 /**
  * Allows the user to input their object as plain text and set it to the state.
@@ -24,9 +25,10 @@ import { accessibleKey, LINKED_IN } from '../utils';
  * @param   {Function} props.setObject Function useSd to set the object with appropriate params.
  * @return  {Element}                  The Input component.
  */
-export default function Input({ setObject }) {
+export default function Input({ setObject, object }) {
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
+  const [optValues, setOptValues] = useState(DEFAULT_OPT_VALUES);
 
   /**
    * Function used to set the object to state's value and parse it using JSON5 library.
@@ -41,7 +43,7 @@ export default function Input({ setObject }) {
     let parsed = null;
     try {
       parsed = JSON5.parse(value);
-      setObject({ parsed: '' });
+      setObject({ parsed: '', ...optValues });
       setError(false);
     } catch (e) {
       setError(true);
@@ -61,27 +63,29 @@ export default function Input({ setObject }) {
    */
   function handleChange(e) {
     e.preventDefault();
-
-    setObject((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setOptValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   /**
-   * Function used to clear the adjoining textareas.
+   * Function used to clear the app's textareas.
+   *
+   * @author  John Robert McCann
+   * @since   11/07/2022
    */
   function clearText() {
     document.getElementById('propType').value = '';
     document.getElementById('jsDoc').value = '';
-    document.getElementById('propType').textContent = '';
-    document.getElementById('jsDoc').textContent = '';
-    document.getElementById('propType').innerContent = '';
-    document.getElementById('jsDoc').innerContent = '';
-    setObject({ parsed: '' });
+    document.getElementById('propType').currentText = '';
+    document.getElementById('jsDoc').currentText = '';
+    setValue('');
+    setObject(DEFAULT_OBJECT);
+    setOptValues(DEFAULT_OPT_VALUES);
   }
+
   return (
     <section className={styles.inputWrap}>
       <textarea
         className={cn(error && styles.error)}
-        id="textArea"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={DEFAULT_VALUE}
@@ -100,13 +104,23 @@ export default function Input({ setObject }) {
         <p className={styles.fullScreen}>{INSTRUCTIONS_FULL}</p>
         <p className={styles.halfScreen}>{INSTRUCTIONS_HALF}</p>
         <ul className={styles.optional}>
-          {AVAILABLE_INPUTS.map((input, i) => (
-            <li key={i}>
-              <input {...input} key={i} onChange={(e) => handleChange(e)} />
-            </li>
-          ))}
+          {AVAILABLE_INPUTS.map((input, i) => {
+            const value = optValues?.[input?.name];
+            return (
+              <li key={i}>
+                <input
+                  {...input}
+                  key={i}
+                  value={value}
+                  onChange={(e) => handleChange(e)}
+                />
+              </li>
+            );
+          })}
           <li>
-            <button onClick={() => clearText()}>Clear</button>
+            <button onClick={clearText} className={styles.clearBtn}>
+              Clear
+            </button>
           </li>
         </ul>
       </div>

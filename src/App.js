@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Input from './Input';
 import Output from './Output/Output';
 import { DEFAULT_OBJECT } from './utils';
@@ -9,7 +9,7 @@ import styles from './App.module.css';
  *
  * @author  John Robert McCann
  * @since   10/17/2022
- * @returns {Element}  Returns the element as app,defaulted as layout.
+ * @returns {Element}  Returns the element as an app, defaulted as layout.
  */
 function App() {
   const [object, setObject] = useState(DEFAULT_OBJECT);
@@ -19,17 +19,6 @@ function App() {
     propType: propRef,
     jsDoc: docRef,
   };
-
-  useEffect(() => {
-    const { parsed = null } = object;
-
-    if (parsed) {
-      // debugger;
-      refMap.propType.current.textContent = '';
-    }
-  }, [object]);
-
-  // console.log('jr textContent', refMap.propType.current.textContent);
 
   /**
    * Function used to copy a certain ref's text to the clipboard.

@@ -23,6 +23,13 @@ import CopyIcon from '../CopyIcon/CopyIcon';
  */
 export default function Output({ object, refMap, clickRef }) {
   const [parsedValue, setParsedValue] = useState(DEFAULT_PARSED_VALUE);
+  const [values, setValues] = useState(object);
+
+  useEffect(() => {
+    if (object) {
+      setValues(object);
+    }
+  }, [object]);
 
   useEffect(() => {
     const {
@@ -30,16 +37,17 @@ export default function Output({ object, refMap, clickRef }) {
       parsed = null,
       version = null,
       date = null,
-    } = object;
-    if (parsed) {
-      setParsedValue((prev) => {
-        return {
-          propType: createPropTypes(parsed),
-          jsDoc: createJSDocs(parsed, author, date, version),
-        };
+    } = values;
+
+    if (!!parsed) {
+      setParsedValue({
+        propType: createPropTypes(parsed),
+        jsDoc: createJSDocs(parsed, author, date, version),
       });
+    } else {
+      setParsedValue(DEFAULT_PARSED_VALUE);
     }
-  }, [object]);
+  }, [values]);
 
   return (
     <section className={styles.outputWrap}>
